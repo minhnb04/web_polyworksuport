@@ -7,8 +7,8 @@ import { set, ref, onValue, remove, update } from "firebase/database";
 import { uploadBytes, getDownloadURL } from "firebase/storage";
 
 const JobApplication = () => {
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
+  const [title, settitle] = useState("");
+  const [description, setdescription] = useState("");
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState(null);
   const [imageList, setImageList] = useState([]);
@@ -20,8 +20,8 @@ const JobApplication = () => {
   const Push = () => {
     const uuid = uid();
     set(ref(db, `${uuid}`), {
-      name,
-      age,
+      title,
+      description,
       uuid,
     }).catch(alert);
   };
@@ -46,13 +46,13 @@ const JobApplication = () => {
   const Update = (x) => {
     setEdit(true);
     setTempuuid(x.uuid);
-    setName(x.name);
-    setAge(x.age);
+    settitle(x.title);
+    setdescription(x.description);
   };
   const SubmitChange = () => {
     update(ref(db, `/${tempuuid}`), {
-      name,
-      age,
+      title,
+      description,
       uuid: tempuuid,
     });
 
@@ -92,7 +92,7 @@ const JobApplication = () => {
     // getImg();
   }, []);
   return (
-    <div className="App" style={{ marginTop: 50 }}>
+    <div classtitle="App" style={{ marginTop: 50 }}>
       <center>
         <img src={url} class="img-thumbnail" alt="..." />
         <input
@@ -105,16 +105,16 @@ const JobApplication = () => {
         <button onClick={upLoadImg}>Upload Image</button>
         <br />
         <input
-          placeholder="Enter your name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          placeholder="Enter your title"
+          value={title}
+          onChange={(e) => settitle(e.target.value)}
         />
         <br />
         <br />
         <input
-          placeholder="Enter your age"
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
+          placeholder="Enter your description"
+          value={description}
+          onChange={(e) => setdescription(e.target.value)}
         />
         <br />
         <br />
@@ -131,27 +131,25 @@ const JobApplication = () => {
         <br />
         {todos.map((x) => (
           <>
-            <div class="card">
-              <img
-                src="https://ps.w.org/metronet-profile-picture/assets/icon-256x256.png?rev=2464419"
-                class="card-img-top"
-                alt="..."
-              />
-              <div class="card-body">
-                <h4 class="card-subtitle mb-2 text-muted">{x.name}</h4>
-                <p class="card-text">{x.age}</p>
-                <button onClick={() => Update(x)}>update</button>
-                <button onClick={() => Delete(x)}>delete</button>
-              </div>
-            </div>
+          <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{x.title}</td>
+      <td>{x.description}</td>
+      <button onClick={() => Update(x)}>update</button>
+      <button onClick={() => Delete(x)}>delete</button>
+    </tr>
+  </tbody>
+</table>
+       
 
-            {/* <text>{x.name}</text>
-            <br />
-            <text>{x.age}</text>
-            <br />
-            <button onClick={() => Update(x)}>update</button>
-            <button onClick={() => Delete(x)}>delete</button>
-            <br /> */}
+     
           </>
         ))}
       </center>
