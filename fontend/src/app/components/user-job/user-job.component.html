@@ -1,0 +1,77 @@
+<div class="content">
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Job applied</h2>
+                    <h5 class="text-white op-7 mb-2">Home/Admin/Job applied</h5>
+                </div>
+                <div class="ml-md-auto py-2 py-md-0">
+                    <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-inner mt--5">
+        <div class="row mt--2">
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive table-hover table-sales">
+                                    <nz-table #basicTable [nzData]="listUserJob">
+                                        <thead>
+                                            <tr>
+                                                <th>User</th>
+                                                <th>Job applied</th>
+                                                <th>Tech</th>
+                                                <th>Candicate</th>
+                                                <th>CV</th>
+                                                <th>CV Link</th>
+                                                <th>Status</th>
+                                                <th>Applied at</th>
+                                                <th>Updated at</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of basicTable.data">
+                                                <td style="font-weight: bold;">{{ data.user.user_name }}</td>
+                                                <td style="font-weight: bold;">{{ data.job.job_name }}</td>
+                                                <td>{{ data.job.technology }}</td>
+                                                <td>{{ data.job.candidate }}</td>
+                                                <td>{{ data.documentCV.document_code }} - {{ data.documentCV.document_name }}</td>
+                                                <td><a target="_blank" href="{{data.documentCV.document_link}}">See detail</a></td>
+                                                <td *ngIf="data.userjob.status != 1" style="font-weight: bold;color:red">Denied</td>
+                                                <td *ngIf="data.userjob.status == 1" style="font-weight: bold;color:green">Accept</td>
+                                                <td>{{ data.userjob.created_at | date: 'dd/MM/yyyy hh:mm aa'}}</td>
+                                                <td>{{ data.userjob.updated_at | date: 'dd/MM/yyyy hh:mm aa'}}</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-danger" placement="left"
+                                                        style="margin-right: 0.5rem;" nzType="dashed" (click)="showConfirm(data.userjob._id)">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-success" placement="left"
+                                                        style="margin-right: 0.5rem;" (click)="activeCV(data.userjob._id, data.job, data.userjob.status)">
+                                                        <i class="fa fa-check"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger" placement="left"
+                                                        style="margin-right: 0.1rem;" (click)="deniedCV(data.userjob._id, data.job, data.userjob.status)">
+                                                        <i class="fa fa-ban"></i>                                                
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </nz-table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

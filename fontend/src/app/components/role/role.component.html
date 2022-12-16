@@ -1,0 +1,77 @@
+<div class="content">
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Role</h2>
+                    <h5 class="text-white op-7 mb-2">Home/Admin/Role</h5>
+                </div>
+                <div class="ml-md-auto py-2 py-md-0">
+                    <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>
+                    <a href="javascript:void(0)" class="btn btn-secondary btn-round" (click)="showAddModal('Add', null)">Add new</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-inner mt--5">
+        <div class="row mt--2">
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive table-hover table-sales">
+                                    <nz-table #basicTable [nzData]="listRole">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Code</th>
+                                                <th>Name</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of basicTable.data">
+                                                <td>{{ data._id }}</td>
+                                                <td style="font-weight: bold;">{{ data.role_code }}</td>
+                                                <td>{{ data.role_name }}</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-warning" placement="left"
+                                                        style="margin-right: 0.5rem;" (click)="showAddModal('Update', data)">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger" placement="left"
+                                                        style="margin-right: 0.1rem;" nzType="dashed" (click)="showConfirm(data._id)">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </nz-table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nz-modal [(nzVisible)]="isDisplay" [nzTitle]="titleModal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <form class="form-horizontal" [formGroup]="AddForm">       
+            <div class="row">
+              <div class="col-md-12">
+                <label class="col-md-10 require">Code</label>
+                  <input type="text" class="form-control" formControlName="role_code" placeholder="input...">   
+              </div>
+              <div class="col-md-12">
+                <label class="col-md-10">Name</label>
+                <input type="text" class="form-control" formControlName="role_name" placeholder="input..">
+              </div>
+            </div>
+          </form>
+      </ng-container>
+</nz-modal>

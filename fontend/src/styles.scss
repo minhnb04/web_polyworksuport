@@ -1,0 +1,54 @@
+/* You can add global styles to this file, and also import other style files */
+
+// custom text
+.text-upper {
+    text-transform: uppercase;
+}
+.text-lower {
+    text-transform: uppercase;
+}
+.fwb {
+    font-weight: bold;
+}
+.text-center {
+    text-align: center;
+}
+.text-left {
+    text-align: left;
+}
+.text-right {
+    text-align: right;
+}
+
+// custom float
+.fl-r {
+    float: right;
+}
+.fl-l {
+    float: left;
+}
+.fs-14 {
+    font-size: 14px;
+}
+.fs-16 {
+    font-size: 16px;
+}
+
+// custom font
+.fwb {
+    font-weight: bold;
+}
+
+// custom margin
+.mt-20 {
+    margin-top: 20px;
+}
+.mt-10 {
+    margin-top: 10px;
+}
+
+label {
+    font-weight: bold !important;
+}
+@import "~bootstrap/dist/css/bootstrap.css"
+

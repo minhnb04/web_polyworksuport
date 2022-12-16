@@ -1,0 +1,223 @@
+<div class="content">
+  <div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+      <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+        <div>
+          <h2 class="text-white pb-2 fw-bold">Job</h2>
+          <h5 class="text-white op-7 mb-2">Home/Admin/Job</h5>
+        </div>
+        <div class="ml-md-auto py-2 py-md-0">
+          <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>
+          <a href="javascript:void(0)" class="btn btn-secondary btn-round" (click)="showAddModal('Add', '')">Add
+            new</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-inner mt--5">
+    <div class="row mt--2">
+      <div class="col-md-12">
+        <div class="card full-height">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="table-responsive table-hover table-sales">
+                  <nz-table #basicTable [nzData]="listJob">
+                    <thead>
+                      <tr>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Gender</th>
+                        <!-- <th>Description</th> -->
+                        <th>Slot</th>
+                        <th>Status</th>
+                        <th>Start date</th>
+                        <th>End date</th>
+                        <th>Image</th>
+                        <th>Salary min</th>
+                        <th>Salary max</th>
+                        <th>Candidate</th>
+                        <th>Technology</th>
+                        <th>Created at</th>
+                        <th>Updated at</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let data of basicTable.data">
+                        <td style="font-weight: bold;">{{ data.job_code }}</td>
+                        <td style="white-space: nowrap;">{{ data.job_name }}</td>
+                        <td *ngIf="data.gender == 0">Female</td>
+                        <td *ngIf="data.gender == 1">Male</td>
+                        <td *ngIf="data.gender == 2">Other</td>
+                        <td *ngIf="data.gender == -1">Both</td>
+                        <!-- <td>{{ data.description }}</td> -->
+                        <td>{{ data.slot }}</td>
+                        <td *ngIf="data.status == 1" style="font-weight: bold;color:green">New</td>
+                        <td *ngIf="data.status != 1" style="font-weight: bold;color:red">Old</td>
+                        <td>{{ data.start_date | date: 'dd/MM/yyyy' }}</td>
+                        <td>{{ data.end_date | date: 'dd/MM/yyyy' }}</td>
+                        <td><img src="{{ data.image }}" style="width: 50px; height:50px" alt=""></td>
+                        <td>{{ data.salary_min | number }}</td>
+                        <td>{{ data.salary_max | number}}</td>
+                        <td>{{ data.candidate }}</td>
+                        <td>{{ data.technology }}</td>
+                        <td>{{ data.created_at | date: 'dd/MM/yyyy hh:mm aa'}}</td>
+                        <td>{{ data.updated_at | date: 'dd/MM/yyyy hh:mm aa'}}</td>
+                        <td style="white-space: nowrap;">
+                          <button class="btn btn-sm btn-outline-primary" placement="left" style="margin-right: 0.5rem;"
+                            (click)="showInfoModal('Information', data)">
+                            <i class="fas fa-eye"></i>
+                          </button>
+                          <button class="btn btn-sm btn-outline-warning" placement="left" style="margin-right: 0.5rem;"
+                            (click)="showAddModal('Update', data)">
+                            <i class="fas fa-edit"></i>
+                          </button>
+                          <button class="btn btn-sm btn-outline-danger" placement="left" style="margin-right: 0.1rem;"
+                            nzType="dashed" (click)="showConfirm(data._id)">
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </nz-table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nz-modal [(nzVisible)]="isDisplay" [nzTitle]="titleModal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <form class="form-horizontal" [formGroup]="AddForm">
+      <div class="row">
+        <div class="col-md-12">
+          <label class="col-md-10 require">Code</label>
+          <input type="text" class="form-control" formControlName="job_code" placeholder="input...">
+        </div>
+        <div class="col-md-12">
+          <label class="col-md-10">Name</label>
+          <input type="text" class="form-control" formControlName="job_name" placeholder="input..">
+        </div>
+        <div class="col-md-12">
+          <label class="col-md-10">Description</label>
+          <input type="text" class="form-control" formControlName="description" placeholder="input..">
+        </div>
+        <div class="col-md-12">
+          <label class="col-md-10">Slot</label>
+          <input type="number" class="form-control" formControlName="slot" placeholder="input..">
+        </div>
+        <div class="col-md-6">
+          <label class="col-md-10">Start date</label>
+          <input type="date" class="form-control" formControlName="start_date" placeholder="input..">
+        </div>
+        <div class="col-md-6">
+          <label class="col-md-10">End date</label>
+          <input type="date" class="form-control" formControlName="end_date" placeholder="input..">
+        </div>
+        <div class="col-md-12">
+          <label class="col-md-10">Image</label>
+          <input type="text" class="form-control" formControlName="image" placeholder="input..">
+        </div>
+        <div class="col-md-6">
+          <label class="col-md-10">Salary min</label>
+          <input type="number" class="form-control" formControlName="salary_min" placeholder="input..">
+        </div>
+        <div class="col-md-6">
+          <label class="col-md-10">Salary max</label>
+          <input type="number" class="form-control" formControlName="salary_max" placeholder="input..">
+        </div>
+        <div class="col-md-6">
+          <label class="col-md-10">Candidate</label>
+          <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select gender"
+          [ngModelOptions]="{standalone: true}" [(ngModel)]="genderSelect">
+          <nz-option [nzValue]="0" nzLabel="Tất cả"></nz-option>
+          <nz-option [nzValue]="1" nzLabel="Lập trình Java"></nz-option>
+          <nz-option [nzValue]="2" nzLabel="Lập trình Android"></nz-option>
+          <nz-option [nzValue]="-1" nzLabel="Android-kotlin"></nz-option>
+          <nz-option [nzValue]="2" nzLabel="Lập trình IOS"></nz-option>
+          <nz-option [nzValue]="-1" nzLabel="Lập trình Web PHP"></nz-option>
+          <nz-option [nzValue]="2" nzLabel="Lập trình back-end Nodejs"></nz-option>
+          <nz-option [nzValue]="-1" nzLabel="Lập trình"></nz-option>
+        </nz-select>
+          <!-- <input type="text" class="form-control" formControlName="candidate" placeholder="input.."> -->
+        </div>
+        <div class="col-md-6">
+          <label class="col-md-10">Technology</label>
+          <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select gender"
+          [ngModelOptions]="{standalone: true}" [(ngModel)]="genderSelect">
+          <nz-option [nzValue]="0" nzLabel="Tất cả"></nz-option>
+          <nz-option [nzValue]="1" nzLabel="Thực tập sinh"></nz-option>
+          <nz-option [nzValue]="2" nzLabel="Fresher"></nz-option>
+          <nz-option [nzValue]="-1" nzLabel="Junior"></nz-option>
+          <nz-option [nzValue]="2" nzLabel="Developer"></nz-option>
+          <nz-option [nzValue]="-1" nzLabel="Senior"></nz-option>
+          <nz-option [nzValue]="2" nzLabel="Manager"></nz-option>
+          <nz-option [nzValue]="-1" nzLabel="Other"></nz-option>
+        </nz-select>
+          <!-- <input type="text" class="form-control" formControlName="technology" placeholder="input.."> -->
+        </div>
+        <div class="col-md-12">
+          <label class="col-md-10">Experience</label>
+          <input type="text" class="form-control" formControlName="experience" placeholder="input..">
+        </div>
+        <div class="col-md-6">
+          <label class="col-md-10">Benefits</label>
+          <input type="text" class="form-control" formControlName="benefits" placeholder="input..">
+        </div>
+        <div class="col-md-6">
+          <label class="col-md-10">Requirement</label>
+          <input type="text" class="form-control" formControlName="requirement" placeholder="input..">
+        </div>
+        <div class="col-md-6">
+          <label class="col-md-10">Gender</label>
+          <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select gender"
+            [ngModelOptions]="{standalone: true}" [(ngModel)]="genderSelect">
+            <nz-option [nzValue]="0" nzLabel="Female"></nz-option>
+            <nz-option [nzValue]="1" nzLabel="Male"></nz-option>
+            <nz-option [nzValue]="2" nzLabel="Other"></nz-option>
+            <nz-option [nzValue]="-1" nzLabel="Both"></nz-option>
+          </nz-select>
+        </div>
+        <div class="col-md-6">
+          <label class="col-md-10">Work form</label>
+          <input type="text" class="form-control" formControlName="work_form" placeholder="input..">
+        </div>
+        <div class="col-md-12">
+          <label class="col-md-10">Work place</label>
+          <input type="text" class="form-control" formControlName="work_place" placeholder="input..">
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isDisplayInfo" [nzTitle]="titleModal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleCancel()">
+  <ng-container *nzModalContent>
+    <details>
+      <summary>Work form</summary>
+      <p>{{dataInfo.work_form}}</p>
+    </details>
+    <details>
+      <summary>Work place</summary>
+      <p>{{dataInfo.work_place}}</p>
+    </details>
+    <details>
+      <summary>Experience</summary>
+      <p>{{dataInfo.experience}}</p>
+    </details>
+    <details>
+      <summary>Benefits</summary>
+      <p>{{dataInfo.benefits}}</p>
+    </details>
+    <details>
+      <summary>Requirement</summary>
+      <p>{{dataInfo.requirement}}</p>
+    </details>
+  </ng-container>
+</nz-modal>

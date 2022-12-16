@@ -1,0 +1,130 @@
+<div style="margin-top: 20px;" class="h-screen flex-grow-1 overflow-y-lg-auto">
+    <main class="py-6 bg-surface-secondary">
+        <div class="container-fluid">
+            <!-- Card stats -->
+            <div class="row g-6 mb-6">
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card shadow border-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total CV</span>
+                                    <span class="h3 font-bold mb-0">{{listDocumentCV?.length ?? 0}}</span>
+                                </div>
+                            </div>
+                            <div class="mt-2 mb-0 text-sm">
+                                <span class="badge badge-pill bg-soft-success text-success me-2">
+                                    <i class="bi bi-arrow-up me-1"></i>13%
+                                </span>
+                                <span class="text-nowrap text-xs text-muted">Since last month</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card shadow border-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">Jobs</span>
+                                    <span class="h3 font-bold mb-0">{{listJob?.length ?? 0}}</span>
+                                </div>
+                            </div>
+                            <div class="mt-2 mb-0 text-sm">
+                                <span class="badge badge-pill bg-soft-success text-success me-2">
+                                    <i class="bi bi-arrow-up me-1"></i>30%
+                                </span>
+                                <span class="text-nowrap text-xs text-muted">Since last month</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card shadow border-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">Users</span>
+                                    <span class="h3 font-bold mb-0">{{listAccount?.length ?? 0}}</span>
+                                </div>
+                            </div>
+                            <div class="mt-2 mb-0 text-sm">
+                                <span class="badge badge-pill bg-soft-danger text-danger me-2">
+                                    <i class="bi bi-arrow-down me-1"></i>-5%
+                                </span>
+                                <span class="text-nowrap text-xs text-muted">Since last month</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card shadow border-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">Job Applied</span>
+                                    <span class="h3 font-bold mb-0">{{listUserJob?.length ?? 0}}</span>
+                                </div>
+                            </div>
+                            <div class="mt-2 mb-0 text-sm">
+                                <span class="badge badge-pill bg-soft-success text-success me-2">
+                                    <i class="bi bi-arrow-up me-1"></i>10%
+                                </span>
+                                <span class="text-nowrap text-xs text-muted">Since last month</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-head-row">
+                                <div class="card-title">User Statistics</div>
+                                <div class="card-tools">
+                                    <a href="javascript:void(0)" (click)="exportExcel()" class="btn btn-info btn-border btn-round btn-sm mr-2">
+                                        <span class="btn-label">
+                                            <i class="fa fa-print"></i>
+                                        </span>
+                                        Export
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive table-hover table-sales"
+                                style="overflow-y: auto;max-height:400px">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>UserName</th>
+                                            <th>Admin</th>
+                                            <th>Active</th>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of listAccount">
+                                            <td>{{ data.user_name }}</td>
+                                            <td *ngIf="data.admin"><i style="color: green;" class="fa fa-check"></i>
+                                            </td>
+                                            <td *ngIf="data.active"><i style="color: green;" class="fa fa-check"></i>
+                                            </td>
+                                            <td *ngIf="!data.admin" style="color: red;">X</td>
+                                            <td *ngIf="!data.active" style="color: red;">X</td>
+                                            <td>{{ data.email }}</td>
+                                            <td>{{ data.role_code }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

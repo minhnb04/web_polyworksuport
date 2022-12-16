@@ -1,0 +1,90 @@
+<div class="content">
+  <div class="panel-header bg-primary-gradient">
+    <div class="page-inner py-5">
+      <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+        <div>
+          <h2 class="text-white pb-2 fw-bold">Template table</h2>
+          <h5 class="text-white op-7 mb-2">HantTech</h5>
+        </div>
+        <div class="ml-md-auto py-2 py-md-0">
+          <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>
+          <a href="#" class="btn btn-secondary btn-round">Add Customer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-inner mt--5">
+    <div class="row row-card-no-pd">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-head-row card-tools-still-right">
+              <h4 class="card-title">Users Geolocation</h4>
+              <div class="card-tools">
+                <button class="btn btn-icon btn-link btn-primary btn-xs"><span class="fa fa-angle-down"></span></button>
+                <button class="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card"><span class="fa fa-sync-alt"></span></button>
+                <button class="btn btn-icon btn-link btn-primary btn-xs"><span class="fa fa-times"></span></button>
+              </div>
+            </div>
+            <p class="card-category">
+            Map of the distribution of users around the world</p>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <section class="content cus-body">
+                <div class="card">
+                    <div class="card-body">
+                          <div class="fl-r row">
+                            <input style="width: 200px;float:right;" type="text" class="form-control" placeholder="Tìm kiếm nhanh...">
+                          </div>
+                    </div>
+                </div>
+              </section>
+              <div class="col-md-12">
+                <div class="table-responsive table-hover table-sales">
+                  <nz-table
+                  #rowSelectionTable
+                  nzShowSizeChanger
+                  [nzData]="listOfData"
+                  (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+                >
+                <thead>
+                  <tr>
+                    <th
+                      [nzSelections]="listOfSelection"
+                      [(nzChecked)]="checked"
+                      [nzIndeterminate]="indeterminate"
+                      (nzCheckedChange)="onAllChecked($event)"
+                    ></th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Address</th>
+                    <th class="text-center" style="width: 101px;">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of rowSelectionTable.data">
+                    <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.age }}</td>
+                    <td>{{ data.address }}</td>
+                    <td>
+                      <button class="btn btn-outline-info btn-sm" style="margin-right: 5px;"> 
+                      <i class="fas fa-edit"></i> 
+                      </button>  
+                      <button class="btn btn-outline-danger btn-sm"> 
+                      <i class="fas fa-trash-alt"></i> 
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+                </nz-table>
+                </div>
+              </div>              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
