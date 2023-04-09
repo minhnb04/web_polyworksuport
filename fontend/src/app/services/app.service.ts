@@ -19,6 +19,14 @@ export class AppService {
     }
   }
 
+  loginForStaffPortal() {    
+    this.com = new common(this.router);
+    var jsonInfo = this.com.getUserinfo();
+    if (jsonInfo != undefined) {
+      this.router.navigate(['/staff']);
+    }
+  }
+
   logout() {
     localStorage.removeItem('UserInfo');
     this.router.navigate(['/login']);

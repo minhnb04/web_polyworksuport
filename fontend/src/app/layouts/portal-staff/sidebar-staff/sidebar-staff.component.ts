@@ -3,12 +3,11 @@ import { ToastrService } from 'ngx-toastr';
 import { AccService } from 'src/app/services/acc.service';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  selector: 'app-sidebar-staff',
+  templateUrl: './sidebar-staff.component.html',
+  styleUrls: ['./sidebar-staff.component.scss']
 })
-export class SidebarComponent implements OnInit {
-
+export class SidebarStaffComponent implements OnInit {
   accountInfor: any;
   isDisplay: boolean = false;
   titleModal: any;
@@ -41,11 +40,11 @@ export class SidebarComponent implements OnInit {
     var req = {
       user_name: this.emailUpdate,
       password: this.oldPassword,
-     }
+    }
     if (!this.oldPassword && !this.confirmPassword) {
       this.toastr.warning('You must input full blank !');
       return false;
-    } 
+    }
     else if (this.newPassword != this.confirmPassword) {
       this.toastr.warning('Confirm password not correctly !');
       return false;

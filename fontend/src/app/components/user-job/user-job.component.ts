@@ -10,7 +10,7 @@ import { BaseComponent } from '../base/base.component';
 export class UserJobComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
-    this.getListUserJob();
+    this.getListUserJobByCompany(this.getInfo().company_code);
   }
 
   showConfirm(id: any): void {
@@ -22,11 +22,11 @@ export class UserJobComponent extends BaseComponent implements OnInit {
           (res: any) => {
             if (res) {
               this.toastr.success('Delete Success !');
-              this.getListUserJob();
+              this.getListUserJobByCompany(this.getInfo().company_code);
             }
             else {
               this.toastr.warning('Delete Fail !');
-              this.getListUserJob();
+              this.getListUserJobByCompany(this.getInfo().company_code);
             }
           }
         )
@@ -46,7 +46,7 @@ export class UserJobComponent extends BaseComponent implements OnInit {
               (res) => {
                 if (res) {
                   this.toastr.success('Success !');
-                  this.getListUserJob();
+                  this.getListUserJobByCompany(this.getInfo().company_code);
                 }
                 else {
                   this.toastr.warning('Fail !');
@@ -77,7 +77,7 @@ export class UserJobComponent extends BaseComponent implements OnInit {
               (res) => {
                 if (res) {
                   this.toastr.success('Success !');
-                  this.getListUserJob();
+                  this.getListUserJobByCompany(this.getInfo().company_code);
                 }
                 else {
                   this.toastr.warning('Fail !');

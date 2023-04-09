@@ -1,19 +1,76 @@
 <div class="wrapper fadeInDown">
 	<div id="formContent">
-	  <!-- Tabs Titles -->
-	  <h2 class="active"> Sign In </h2>
-  
-	  <!-- Icon -->
-	  <div class="fadeIn first">
-		<!-- <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" /> -->
-		<i class="login__icon fas fa-lock"></i>
-	  </div>
-  
-	  <!-- Login Form -->
-	  <form class="form-horizontal" [formGroup]="LoginForm">
-		<input type="text" id="login" class="form-control" style="width: 50%;margin: auto;margin-bottom: 10px;" formControlName="UserName" placeholder="User name">
-		<input type="password" id="login" class="form-control" style="width: 50%;margin: auto;" formControlName="Password" placeholder="Password">
-		<input type="submit" class="fadeIn fourth" value="Log In" (click)="logIn()">
-	  </form>
+		<!-- Tabs Titles -->
+		<h2 class="active"> Sign In </h2>
+
+		<!-- Icon -->
+		<div class="fadeIn first">
+			<!-- <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" /> -->
+			<i class="login__icon fas fa-lock"></i>
+		</div>
+
+		<!-- Login Form -->
+		<form class="form-horizontal" [formGroup]="LoginForm">
+			<input type="text" id="login" class="fadeIn second" formControlName="UserName" placeholder="User name">
+			<input type="text" id="login" class="fadeIn second" formControlName="Password" placeholder="Password">
+			<input type="submit" class="fadeIn fourth" value="Log In" (click)="logIn()">
+		</form>
+		<h2 style="margin-top: -30px">
+			<a style="font-weight: bold;" href="javascript:void(0)" (click)="registerUser()">Register account for
+				company</a>
+		</h2>
 	</div>
-  </div>
+</div>
+
+
+<nz-modal [(nzVisible)]="isDisplay" nzTitle="Register User" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+	<ng-container *nzModalContent>
+		<form class="form-horizontal" [formGroup]="AddForm">
+			<div class="row">
+				<div class="col-md-12">
+					<label class="col-md-10 require">Full name</label>
+					<input nz-input placeholder="input.." formControlName="full_name" />
+				</div>
+				<div class="col-md-12">
+					<label class="col-md-10 require">User name</label>
+					<input nz-input placeholder="input.." formControlName="user_name" />
+				</div>
+				<div class="col-md-12">
+					<label class="col-md-10">Email</label>
+					<input nz-input placeholder="input.." formControlName="email" />
+				</div>
+				<div class="col-md-12">
+					<label class="col-md-10">Password</label>
+					<input type="password" nz-input placeholder="input.." formControlName="password" />
+				</div>
+				<div class="col-md-12">
+					<label class="col-md-10">Date of birth</label>
+					<input type="date" class="form-control" formControlName="dob" placeholder="input..">
+				</div>
+				<div class="col-md-12" style="margin-bottom: 20px;">
+					<label class="col-md-10">Address</label>
+					<input nz-input placeholder="input.." formControlName="address" />
+				</div>
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-6">
+							<nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select company"
+								[ngModelOptions]="{standalone: true}" [(ngModel)]="companySelect">
+								<nz-option *ngFor="let r of listCompany" nzValue="{{r.company_code}}"
+									nzLabel="{{r.company_name}}"></nz-option>
+							</nz-select>
+						</div>
+						<div class="col-md-6">
+							<nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select gender"
+								[ngModelOptions]="{standalone: true}" [(ngModel)]="genderSelect">
+								<nz-option [nzValue]="0" nzLabel="Female"></nz-option>
+								<nz-option [nzValue]="1" nzLabel="Male"></nz-option>
+								<nz-option [nzValue]="2" nzLabel="Other"></nz-option>
+							</nz-select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</ng-container>
+</nz-modal>

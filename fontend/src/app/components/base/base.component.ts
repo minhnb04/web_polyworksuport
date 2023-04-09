@@ -13,18 +13,18 @@ import { AccountService } from 'src/app/services/account.service';
 import { JobService } from 'src/app/services/job.service';
 import { DocumentCVService } from 'src/app/services/document-cv.service';
 import { UserJobService } from 'src/app/services/userJob.service';
-import { ExcelServices } from 'src/app/services/excel.service';
+// import { ExcelServices } from 'src/app/services/excel.service';
 
 const formatDate = (date: string | number | Date) => {
   var d = new Date(date),
-      month = '' + (d.getMonth() + 2),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
+    month = '' + (d.getMonth() + 2),
+    day = '' + d.getDate(),
+    year = d.getFullYear();
 
-  if (month.length < 2) 
-      month = '0' + month;
-  if (day.length < 2) 
-      day = '0' + day;
+  if (month.length < 2)
+    month = '0' + month;
+  if (day.length < 2)
+    day = '0' + day;
 
   return [year, month, day].join('-');
 }
@@ -74,28 +74,29 @@ export class BaseComponent {
     public jobService: JobService,
     public documentCVService: DocumentCVService,
     public userJobService: UserJobService,
-    public excelService: ExcelServices
+    // public excelService: ExcelServices
   ) { }
 
   listRole: any = [];
   listAccount: any = [];
   listJob: any = [];
   listDocumentCV: any = [];
+  company_code: any;
 
   getInfo() {
-    var infoUser = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('UserInfo'))));;
-    return infoUser; 
+    var infoUser = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('UserInfo'))));
+    return infoUser;
   }
 
   genRandonString(length: any) {
     var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
     var charLength = chars.length;
     var result = '';
-    for ( var i = 0; i < length; i++ ) {
-       result += chars.charAt(Math.floor(Math.random() * charLength));
+    for (var i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * charLength));
     }
     return result.toString() ?? '';
- }
+  }
 
   getListRole = () => {
     this.roleService.getList().subscribe(
@@ -109,7 +110,6 @@ export class BaseComponent {
     this.accountService.getList().subscribe(
       (res: any) => {
         this.listAccount = res.Data;
-        console.log(this.listAccount);
       }
     )
   };
@@ -118,7 +118,6 @@ export class BaseComponent {
     this.documentCVService.getList().subscribe(
       (res: any) => {
         this.listDocumentCV = res.Data;
-        console.log(this.listDocumentCV);
       }
     )
   };
@@ -131,11 +130,36 @@ export class BaseComponent {
     )
   };
 
+  getListJobByCompany = (company_code: any) => {
+    if (company_code?.length > 0) {
+      this.jobService.getListByCompany(company_code).subscribe(
+        (res: any) => {
+          this.listJob = res.Data;
+        }
+      )
+    }
+    else {
+      this.getListJob();
+    }
+  };
+
+  getListUserJobByCompany = (company_code: any) => {
+    if (company_code?.length > 0) {
+      this.userJobService.getListByCompany(company_code).subscribe(
+        (res: any) => {
+          this.listUserJob = res.Data;
+        }
+      )
+    }
+    else {
+      this.getListUserJob();
+    }
+  };
+
   getListUserJob = () => {
     this.userJobService.getList().subscribe(
       (res: any) => {
         this.listUserJob = res.Data;
-        console.log(res,'loggggg');
       }
     )
   }

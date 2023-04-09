@@ -31,6 +31,16 @@ export class AccountService {
       );
   }
 
+  register(account: any): Observable<any> {
+    return this.http
+      .post<any>(this.appConfig.API + 'api/account/register', account)
+      .pipe(
+        map((z) => {
+          return z;
+        })
+      );
+  }
+
   updateInfor(account: any, id: any): Observable<any> {
     return this.http
       .put<any>(this.appConfig.API + 'api/account/'+id, account)

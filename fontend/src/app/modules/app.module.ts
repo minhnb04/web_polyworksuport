@@ -29,6 +29,8 @@ import { DocumentCvComponent } from '../components/document-cv/document-cv.compo
 import { UserComponent } from '../components/user/user.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { UserJobComponent } from '../components/user-job/user-job.component';
+import { PortalCompanyComponent } from '../portals/portal-company/portal-company.component';
+import { SidebarStaffComponent } from '../layouts/portal-staff/sidebar-staff/sidebar-staff.component';
 
 registerLocaleData(en);
 
@@ -47,7 +49,10 @@ registerLocaleData(en);
     DocumentCvComponent,
     UserComponent,
     UserJobComponent,
-    DashboardComponent
+    DashboardComponent,
+    PortalCompanyComponent,
+    SidebarStaffComponent,
+    LoginComponent
   ],
   imports: [
     DemoNgZorroAntdModule,

@@ -37,7 +37,7 @@
                                             <tr *ngFor="let data of basicTable.data">
                                                 <td style="font-weight: bold;">{{ data.document_code }}</td>
                                                 <td>{{ data.document_name }}</td>
-                                                <td><a target="_blank" [href]="data.document_link">See detail</a></td>
+                                                <td>{{ data.document_link }}</td>
                                                 <td *ngIf="data.status == 1" style="font-weight: bold;color:rgb(167, 167, 43)">Open</td>
                                                 <td *ngIf="data.status != 1" style="font-weight: bold;color:green">Accept</td>
                                                 <td>{{ data.user_id }}</td>

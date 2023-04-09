@@ -18,6 +18,6 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     this.getListUserJob();
   }
   exportExcel() {
-    this.excelService.exportAsExcelFile(this.listAccount, 'accounts');
+    // this.excelService.exportAsExcelFile(this.listAccount, 'accounts');
   }
 }

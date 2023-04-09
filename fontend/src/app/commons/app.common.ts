@@ -10,7 +10,7 @@ export class common {
     this.LoginResult = new ResponseLogin();
     this.LoginResult = this.getUserinfo();
     if (!this.LoginResult) {
-      localStorage.removeItem('AccountInfo');
+      localStorage.removeItem('UserInfo');
       this.router.navigate(['/login']);
     }
   }
@@ -18,7 +18,7 @@ export class common {
   constructor(private router: Router) {}
 
   public getUserinfo() {
-    this.LoginResult = JSON.parse(localStorage.getItem('AccountInfo') || '{}');
+    this.LoginResult = JSON.parse(localStorage.getItem('UserInfo') || '{}');
     return this.LoginResult;
   }
 
@@ -26,7 +26,7 @@ export class common {
     this.router.navigate(['/']);
   }
   logout() {
-    localStorage.removeItem('AccountInfo');
+    localStorage.removeItem('UserInfo');
     this.router.navigate(['/login']);
   }
 }

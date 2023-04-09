@@ -28,7 +28,7 @@
                         <th>Code</th>
                         <th>Name</th>
                         <th>Gender</th>
-                        <!-- <th>Description</th> -->
+                        <th>Description</th>
                         <th>Slot</th>
                         <th>Status</th>
                         <th>Start date</th>
@@ -46,12 +46,11 @@
                     <tbody>
                       <tr *ngFor="let data of basicTable.data">
                         <td style="font-weight: bold;">{{ data.job_code }}</td>
-                        <td style="white-space: nowrap;">{{ data.job_name }}</td>
+                        <td>{{ data.job_name }}</td>
                         <td *ngIf="data.gender == 0">Female</td>
                         <td *ngIf="data.gender == 1">Male</td>
                         <td *ngIf="data.gender == 2">Other</td>
-                        <td *ngIf="data.gender == -1">Both</td>
-                        <!-- <td>{{ data.description }}</td> -->
+                        <td>{{ data.description }}</td>
                         <td>{{ data.slot }}</td>
                         <td *ngIf="data.status == 1" style="font-weight: bold;color:green">New</td>
                         <td *ngIf="data.status != 1" style="font-weight: bold;color:red">Old</td>
@@ -134,33 +133,11 @@
         </div>
         <div class="col-md-6">
           <label class="col-md-10">Candidate</label>
-          <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select gender"
-          [ngModelOptions]="{standalone: true}" [(ngModel)]="genderSelect">
-          <nz-option [nzValue]="0" nzLabel="Tất cả"></nz-option>
-          <nz-option [nzValue]="1" nzLabel="Lập trình Java"></nz-option>
-          <nz-option [nzValue]="2" nzLabel="Lập trình Android"></nz-option>
-          <nz-option [nzValue]="-1" nzLabel="Android-kotlin"></nz-option>
-          <nz-option [nzValue]="2" nzLabel="Lập trình IOS"></nz-option>
-          <nz-option [nzValue]="-1" nzLabel="Lập trình Web PHP"></nz-option>
-          <nz-option [nzValue]="2" nzLabel="Lập trình back-end Nodejs"></nz-option>
-          <nz-option [nzValue]="-1" nzLabel="Lập trình"></nz-option>
-        </nz-select>
-          <!-- <input type="text" class="form-control" formControlName="candidate" placeholder="input.."> -->
+          <input type="text" class="form-control" formControlName="candidate" placeholder="input..">
         </div>
         <div class="col-md-6">
           <label class="col-md-10">Technology</label>
-          <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select gender"
-          [ngModelOptions]="{standalone: true}" [(ngModel)]="genderSelect">
-          <nz-option [nzValue]="0" nzLabel="Tất cả"></nz-option>
-          <nz-option [nzValue]="1" nzLabel="Thực tập sinh"></nz-option>
-          <nz-option [nzValue]="2" nzLabel="Fresher"></nz-option>
-          <nz-option [nzValue]="-1" nzLabel="Junior"></nz-option>
-          <nz-option [nzValue]="2" nzLabel="Developer"></nz-option>
-          <nz-option [nzValue]="-1" nzLabel="Senior"></nz-option>
-          <nz-option [nzValue]="2" nzLabel="Manager"></nz-option>
-          <nz-option [nzValue]="-1" nzLabel="Other"></nz-option>
-        </nz-select>
-          <!-- <input type="text" class="form-control" formControlName="technology" placeholder="input.."> -->
+          <input type="text" class="form-control" formControlName="technology" placeholder="input..">
         </div>
         <div class="col-md-12">
           <label class="col-md-10">Experience</label>
@@ -181,7 +158,6 @@
             <nz-option [nzValue]="0" nzLabel="Female"></nz-option>
             <nz-option [nzValue]="1" nzLabel="Male"></nz-option>
             <nz-option [nzValue]="2" nzLabel="Other"></nz-option>
-            <nz-option [nzValue]="-1" nzLabel="Both"></nz-option>
           </nz-select>
         </div>
         <div class="col-md-6">
