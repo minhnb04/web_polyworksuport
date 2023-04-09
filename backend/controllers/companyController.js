@@ -1,11 +1,11 @@
 const response = require('../models/outputModels/responseBase');
-const jobService = require('../services/interfaces/jobService');
+const companyService = require('../services/interfaces/companyService');
 const handleError = require('../commons/handleErrors');
 const printStacktrace = handleError.PrintStacktrace;
 
 exports.Load_List = async (req, res) => {
     try {
-        const result = await jobService.Ifind();
+        const result = await companyService.Ifind();
         if (!result) {
             printStacktrace.errorNotFound(req, res);
         }
@@ -18,49 +18,18 @@ exports.Load_List = async (req, res) => {
     }
 };
 
-exports.Load_By_Company = async (req, res) => {
-    try {
-        const result = await jobService.Ifind();
-        if (!result) {
-            printStacktrace.errorNotFound(req, res);
-        }
-        else {
-            var rsUser = result.filter(x => x.company_code == req.params.company_code);
-            response.ResponseBase(req, res, res.statusCode, "Thành công !", rsUser);
-        }
-    }
-    catch (ex) {
-        printStacktrace.throwException(req, res, ex);
-    }
-};
-
 exports.Insert = async (req, res) => {
     try {
-        let reqjob = {
-            job_code: req.body.job_code,
-            job_name: req.body.job_name,
+        let reqcompany = {
+            company_code: req.body.company_code,
+            company_name: req.body.company_name,
             description: req.body.description,
-            slot: req.body.slot,
-            status: req.body.status,
-            start_date: req.body.start_date,
-            end_date: req.body.end_date,
-            image: req.body.image,
-            salary_min: req.body.salary_min,
-            salary_max: req.body.salary_max,
+            logo: req.body.logo,
             created_at: req.body.created_at,
             updated_at: req.body.updated_at,
             deleted_at: req.body.deleted_at,
-            candidate: req.body.candidate,
-            technology: req.body.technology,
-            work_form : req.body.work_form,
-            work_place: req.body.work_place,
-            gender : req.body.gender,
-            experience: req.body.experience ,
-            benefits: req.body.benefits,
-            requirement: req.body.requirement,
-            company_code: req.body.company_code
         };
-        const result = await jobService.IinsertOne(reqjob);
+        const result = await companyService.IinsertOne(reqcompany);
         if (result) {
             response.ResponseBase(req, res, res.statusCode, "Thành công !");
         }
@@ -75,7 +44,7 @@ exports.Insert = async (req, res) => {
 
 exports.Update = async (req, res) => {
     try {
-        const result = await jobService.IupdateOne({ _id: req.params.id }, req.body);
+        const result = await companyService.IupdateOne({ _id: req.params.id }, req.body);
         if (result) {
             response.ResponseBase(req, res, res.statusCode, "Cập nhật thành công !");
         }
@@ -90,7 +59,7 @@ exports.Update = async (req, res) => {
 
 exports.Delete = async (req, res) => {
     try {
-        const result = await jobService.IdeleteOne({ _id: req.params.id });
+        const result = await companyService.IdeleteOne({ _id: req.params.id });
         if (result) {
             response.ResponseBase(req, res, res.statusCode, "Xóa thành công !");
         }

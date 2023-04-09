@@ -46,6 +46,22 @@ exports.Load_List = async (req, res) => {
     }
 };
 
+exports.Load_By_Company = async (req, res) => {
+    try {
+        const result = await userService.Ifind();
+        if (!result) {
+            printStacktrace.errorNotFound(req, res);
+        }
+        else {
+            var rsJob = result.filter(x => x.company_code == req.params.company_code);
+            response.ResponseBase(req, res, res.statusCode, "Thành công !", rsJob);
+        }
+    }
+    catch (ex) {
+        printStacktrace.throwException(req, res, ex);
+    }
+};
+
 exports.Find_By_Id = async (req, res) => {
     try {
         const result = await userService.IfindById(req.params.id);
@@ -113,6 +129,8 @@ exports.Register = async (req, res) => {
             admin: req.body.admin,
             active: req.body.active,
             image: req.body.image,
+            isVIP: req.body.isVIP,
+            company_code: req.body.company_code,
             //01: ADMIN, 02: NGUOI DUNG, 03: QUAN LY
             role_code: req.body.role_code,
             created_at: req.body.created_at,

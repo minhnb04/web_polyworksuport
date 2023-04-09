@@ -5,6 +5,7 @@ const email = require('../routes/email');
 const job = require('../routes/job');
 const documentCV = require('../routes/documentCv');
 const userJob = require('../routes/userJob');
+const company = require('../routes/company');
 
 app.use('/api/account', user);
 app.use('/api/email', email);
@@ -12,3 +13,4 @@ app.use('/api/role', role);
 app.use('/api/job', job);
 app.use('/api/userJob', userJob);
 app.use('/api/documentCV', documentCV);
+app.use('/api/company', company);

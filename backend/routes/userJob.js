@@ -4,6 +4,7 @@ const userJobController = require('../controllers/userJobController');
 // const auth = require('../middlewares/auth');
 
 router.get('/', userJobController.Load_List);
+router.get('/getByCompany/:company_code', userJobController.Load_By_Company);
 router.post('/', userJobController.Insert);
 router.put('/:id', userJobController.Update);
 router.delete('/:id', userJobController.Delete);

@@ -13,19 +13,51 @@ exports.Load_List = async (req, res) => {
             printStacktrace.errorNotFound(req, res);
         }
         else {
-            const lstUserJob = [];
-            result.forEach(async x => {
+            var lstUserJob = [];
+            for (let x of result) {
                 var us = await userService.IfindById(x.user_id);
-                var cv = await userService.IfindById(x.user_id);
-                var jobb = await userService.IfindById(x.user_id);
+                var cv = await documentCVService.IfindById(x.cv_id);
+                var jobb = await jobService.IfindById(x.job_id);
+                delete us.password;
+
                 lstUserJob.push({
-                    x,
+                    userjob: x,
                     user: us,
                     documentCV: cv,
                     job: jobb,
                 });
-            })
+            }
             response.ResponseBase(req, res, res.statusCode, "Thành công !", lstUserJob);
+        }
+    }
+    catch (ex) {
+        printStacktrace.throwException(req, res, ex);
+    }
+};
+
+exports.Load_By_Company = async (req, res) => {
+    try {
+        const result = await userJobService.Ifind();
+        if (!result) {
+            printStacktrace.errorNotFound(req, res);
+        }
+        else {
+            var lstUserJob = [];
+            for (let x of result) {
+                var us = await userService.IfindById(x.user_id);
+                var cv = await documentCVService.IfindById(x.cv_id);
+                var jobb = await jobService.IfindById(x.job_id);
+                delete us.password;
+
+                lstUserJob.push({
+                    userjob: x,
+                    user: us,
+                    documentCV: cv,
+                    job: jobb,
+                });
+            }
+            var rsUserJob = lstUserJob.filter(x => x.job.company_code == req.params.company_code);
+            response.ResponseBase(req, res, res.statusCode, "Thành công !", rsUserJob);
         }
     }
     catch (ex) {

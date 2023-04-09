@@ -4,6 +4,7 @@ const userController = require('../controllers/userController');
 // const auth = require('../middlewares/auth');
 
 router.get('/', userController.Load_List);
+router.get('/getByCompany/:company_code', userController.Load_By_Company);
 router.get('/:id', userController.Find_By_Id);
 router.post('/login',userController.Login);
 router.post('/register', userController.Register);
