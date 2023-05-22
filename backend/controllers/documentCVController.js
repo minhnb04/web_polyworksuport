@@ -29,6 +29,7 @@ exports.Insert = async (req, res) => {
             created_at: req.body.created_at,
             updated_at: req.body.updated_at,
             deleted_at: req.body.deleted_at,
+            company_code: req.body.company_code,
         };
         const result = await documentCVService.IinsertOne(reqdocumentCV);
         if (result) {
@@ -73,6 +74,22 @@ exports.FindByUser = async (req, res) => {
     }
 };
 
+exports.FindById = async (req, res) => {
+    try {
+        const result = await documentCVService.IfindById(req.params.id);
+        if (result) {
+            response.ResponseBase(req, res, res.statusCode, "Thành công !", result);
+        }
+        else {
+            printStacktrace.errorNotFound(req, res);
+        }
+    }
+    catch (ex) {
+        printStacktrace.throwException(req, res, ex);
+    }
+};
+
+
 exports.Delete = async (req, res) => {
     try {
         const result = await documentCVService.IdeleteOne({ _id: req.params.id });
@@ -81,6 +98,22 @@ exports.Delete = async (req, res) => {
         }
         else {
             printStacktrace.errorBadRequest(req, res);
+        }
+    }
+    catch (ex) {
+        printStacktrace.throwException(req, res, ex);
+    }
+};
+
+exports.Load_By_Company = async (req, res) => {
+    try {
+        const result = await documentCVService.Ifind();
+        if (!result) {
+            printStacktrace.errorNotFound(req, res);
+        }
+        else {
+            var rsCV = result.filter(x => x.company_code == req.params.company_code);
+            response.ResponseBase(req, res, res.statusCode, "Thành công !", rsCV);
         }
     }
     catch (ex) {

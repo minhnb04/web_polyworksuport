@@ -1,5 +1,5 @@
 const config = {
-    mongoURI: "mongodb://localhost:27017/admin"
+    mongoURI: "mongodb+srv://topcv2022:baonq@cluster0.7gk8phl.mongodb.net/TopCV2022"
   };
 module.exports = config;
   

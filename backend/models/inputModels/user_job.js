@@ -9,6 +9,7 @@ let UserJobSchema = new Schema({
     created_at: { type: Date },
     updated_at: { type: Date },
     deleted_at: { type: Date },
+    company_code: { type: String },
 });
 
 // Export the model
