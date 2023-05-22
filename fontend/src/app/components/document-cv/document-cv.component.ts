@@ -18,28 +18,33 @@ export class DocumentCvComponent extends BaseComponent implements OnInit {
   })
 
   ngOnInit(): void {
-    this.getListDocumentCV();
+    this.getListCVByCompany(this.getInfo().company_code);
   }
 
   showConfirm(id: any): void {
-    this.modal.confirm({
-      nzTitle: '<i>Do you Want to delete these items?</i>',
-      // nzContent: '<b>Some descriptions</b>',
-      nzOnOk: () => {
-        this.documentCVService.delete(id).subscribe(
-          (res: any) => {
-            if (res) {
-              this.toastr.success('Delete Success !');
-              this.getListDocumentCV();
+    if (this.getInfo().isVIP != 3) {
+      this.toastr.warning('You must upgrade your account to VIP for this future !');
+    }
+    else {
+      this.modal.confirm({
+        nzTitle: '<i>Do you Want to delete these items?</i>',
+        // nzContent: '<b>Some descriptions</b>',
+        nzOnOk: () => {
+          this.documentCVService.delete(id).subscribe(
+            (res: any) => {
+              if (res) {
+                this.toastr.success('Delete Success !');
+                this.getListDocumentCV();
+              }
+              else {
+                this.toastr.warning('Delete Fail !');
+                this.getListDocumentCV();
+              }
             }
-            else {
-              this.toastr.warning('Delete Fail !');
-              this.getListDocumentCV();
-            }
-          }
-        )
-      }
-    });
+          )
+        }
+      });
+    }
   }
 
   showAddModal(title: any, dataEdit: any): void {
@@ -62,31 +67,41 @@ export class DocumentCvComponent extends BaseComponent implements OnInit {
   }
 
   acceptCV(id: any) {
-    this.documentCVService.update({status: 2}, id).subscribe(
-      (res: any) => {
-        if (res) {
-          this.toastr.success('Success !');
-          this.getListDocumentCV();
+    if (this.getInfo().isVIP != 3) {
+      this.toastr.warning('You must upgrade your account to VIP for this future !');
+    }
+    else {
+      this.documentCVService.update({ status: 2 }, id).subscribe(
+        (res: any) => {
+          if (res) {
+            this.toastr.success('Success !');
+            this.getListDocumentCV();
+          }
+          else {
+            this.toastr.success('Fail !');
+          }
         }
-        else {
-          this.toastr.success('Fail !');
-        }
-      }
-    );
+      );
+    }
   }
 
   denyCV(id: any) {
-    this.documentCVService.update({status: 1}, id).subscribe(
-      (res: any) => {
-        if (res) {
-          this.toastr.success('Success !');
-          this.getListDocumentCV();
+    if (this.getInfo().isVIP != 3) {
+      this.toastr.warning('You must upgrade your account to VIP for this future !');
+    }
+    else {
+      this.documentCVService.update({ status: 1 }, id).subscribe(
+        (res: any) => {
+          if (res) {
+            this.toastr.success('Success !');
+            this.getListDocumentCV();
+          }
+          else {
+            this.toastr.success('Fail !');
+          }
         }
-        else {
-          this.toastr.success('Fail !');
-        }
-      }
-    );
+      );
+    }
   }
 
   handleOk(): void {
@@ -96,7 +111,7 @@ export class DocumentCvComponent extends BaseComponent implements OnInit {
       document_link: this.AddForm.value.document_link,
       user_id: this.AddForm.value.user_id,
     }
-    
+
     if (this.selected_ID) {
       req.updated_at = new Date();
       this.documentCVService.update(req, this.selected_ID).subscribe(
@@ -126,7 +141,7 @@ export class DocumentCvComponent extends BaseComponent implements OnInit {
         }
       );
     }
-    
+
     this.isDisplay = false;
   }
 

@@ -83,14 +83,14 @@
                         <div class="card-header">
                             <div class="card-head-row">
                                 <div class="card-title">User Statistics</div>
-                                <div class="card-tools">
+                                <!-- <div class="card-tools">
                                     <a href="javascript:void(0)" (click)="exportExcel()" class="btn btn-info btn-border btn-round btn-sm mr-2">
                                         <span class="btn-label">
                                             <i class="fa fa-print"></i>
                                         </span>
                                         Export
                                     </a>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="card-body">
@@ -117,6 +117,43 @@
                                             <td *ngIf="!data.active" style="color: red;">X</td>
                                             <td>{{ data.email }}</td>
                                             <td>{{ data.role_code }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-head-row">
+                                <div class="card-title">JOB Statistics</div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive table-hover table-sales"
+                                style="overflow-y: auto;max-height:400px">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Code</th>
+                                            <th>Job Name</th>
+                                            <th>Applied</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of listJobApplied">
+                                            <td>{{ data._id }}</td>
+                                            <td>{{ data.job_code }}</td>
+                                            <td>{{ data.job_name }}</td>
+                                            <td>{{ data.count_applied }}</td>
+                                            <td>{{ data.description }}</td>
                                         </tr>
                                     </tbody>
                                 </table>

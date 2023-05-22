@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BaseComponent } from '../base/base.component';
 
 @Component({
@@ -14,24 +14,23 @@ export class JobComponent extends BaseComponent implements OnInit {
   dataInfo: any;
 
   AddForm = new FormGroup({
-    job_code: new FormControl(null),
-    job_name: new FormControl(null),
-    description: new FormControl(null),
-    slot: new FormControl(null),
+    job_code: new FormControl(null, Validators.required),
+    job_name: new FormControl(null, Validators.required),
+    description: new FormControl(null, Validators.required),
+    slot: new FormControl(null, Validators.required),
     status: new FormControl(null),
-    start_date: new FormControl(null),
-    end_date: new FormControl(null),
-    image: new FormControl(null),
-    salary_min: new FormControl(null),
-    salary_max: new FormControl(null),
-    candidate: new FormControl(null),
-    technology: new FormControl(null),
-    //
-    work_form: new FormControl(null),
-    work_place: new FormControl(null),
-    experience: new FormControl(null),
-    benefits: new FormControl(null),
-    requirement: new FormControl(null),
+    start_date: new FormControl(null, Validators.required),
+    end_date: new FormControl(null, Validators.required),
+    image: new FormControl(null, Validators.required),
+    salary_min: new FormControl(null, Validators.required),
+    salary_max: new FormControl(null, Validators.required),
+    candidate: new FormControl(null, Validators.required),
+    technology: new FormControl(null, Validators.required),
+    work_form: new FormControl(null, Validators.required),
+    work_place: new FormControl(null, Validators.required),
+    experience: new FormControl(null, Validators.required),
+    benefits: new FormControl(null, Validators.required),
+    requirement: new FormControl(null, Validators.required),
   })
 
   ngOnInit(): void {
@@ -65,7 +64,7 @@ export class JobComponent extends BaseComponent implements OnInit {
   }
 
   showAddModal(title: any, dataEdit: any): void {
-    if (!this.getInfo().isVIP) {
+    if (this.getInfo().isVIP != 3) {
       this.toastr.warning('You must upgrade your account to VIP for this future !');
     }
     else {
@@ -127,39 +126,49 @@ export class JobComponent extends BaseComponent implements OnInit {
       benefits: this.AddForm.value.benefits,
       requirement: this.AddForm.value.requirement,
       gender: this.genderSelect,
+      company_code: this.getInfo().company_code,
     }
 
-    if (this.selected_ID) {
-      req.updated_at = new Date();
-      this.jobService.update(req, this.selected_ID).subscribe(
-        (res: any) => {
-          if (res) {
-            this.toastr.success('Success !');
-            this.getListJobByCompany(this.getInfo().company_code);
+    if (this.AddForm.valid) {
+      if (this.selected_ID) {
+        req.updated_at = new Date();
+        this.jobService.update(req, this.selected_ID).subscribe(
+          (res: any) => {
+            if (res) {
+              this.toastr.success('Success !');
+              this.getListJobByCompany(this.getInfo().company_code);
+            }
+            else {
+              this.toastr.success('Fail !');
+            }
           }
-          else {
-            this.toastr.success('Fail !');
+        );
+      }
+      else {
+        req.created_at = new Date();
+        req.status = 1;
+        this.jobService.insert(req).subscribe(
+          (res: any) => {
+            if (res) {
+              this.toastr.success('Success !');
+              this.getListJobByCompany(this.getInfo().company_code);
+            }
+            else {
+              this.toastr.success('Fail !');
+            }
           }
-        }
-      );
+        );
+      }
+      this.isDisplay = false;
     }
     else {
-      req.created_at = new Date();
-      req.status = 1;
-      this.jobService.insert(req).subscribe(
-        (res: any) => {
-          if (res) {
-            this.toastr.success('Success !');
-            this.getListJobByCompany(this.getInfo().company_code);
-          }
-          else {
-            this.toastr.success('Fail !');
-          }
+      Object.values(this.AddForm.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
         }
-      );
+      });
     }
-
-    this.isDisplay = false;
   }
 
   handleCancel(): void {

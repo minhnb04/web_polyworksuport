@@ -6,9 +6,9 @@
                     <h2 class="text-white pb-2 fw-bold">DocumentCV</h2>
                     <h5 class="text-white op-7 mb-2">Home/Admin/DocumentCV</h5>
                 </div>
-                <div class="ml-md-auto py-2 py-md-0">
+                <!-- <div class="ml-md-auto py-2 py-md-0">
                     <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -37,17 +37,17 @@
                                             <tr *ngFor="let data of basicTable.data">
                                                 <td style="font-weight: bold;">{{ data.document_code }}</td>
                                                 <td>{{ data.document_name }}</td>
-                                                <td>{{ data.document_link }}</td>
+                                                <td><a href="{{ data.document_link }}" target="_blank">Link CV</a></td>
                                                 <td *ngIf="data.status == 1" style="font-weight: bold;color:rgb(167, 167, 43)">Open</td>
                                                 <td *ngIf="data.status != 1" style="font-weight: bold;color:green">Accept</td>
                                                 <td>{{ data.user_id }}</td>
                                                 <td>{{ data.created_at | date: 'dd/MM/yyyy hh:mm aa'}}</td>
                                                 <td>{{ data.updated_at | date: 'dd/MM/yyyy hh:mm aa'}}</td>
                                                 <td>
-                                                    <button class="btn btn-sm btn-outline-warning" placement="left"
+                                                    <!-- <button class="btn btn-sm btn-outline-warning" placement="left"
                                                         style="margin-right: 0.5rem;" (click)="showAddModal('Update', data)">
                                                         <i class="fas fa-edit"></i>
-                                                    </button>
+                                                    </button> -->
                                                     <button class="btn btn-sm btn-outline-danger" placement="left"
                                                         style="margin-right: 0.5rem;" nzType="dashed" (click)="showConfirm(data._id)">
                                                         <i class="fas fa-trash-alt"></i>

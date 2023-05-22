@@ -7,8 +7,7 @@
                     <h5 class="text-white op-7 mb-2">Home/Admin/User</h5>
                 </div>
                 <div class="ml-md-auto py-2 py-md-0">
-                    <a *ngIf="isAdmin" href="javascript:void(0)" class="btn btn-secondary btn-round"
-                        (click)="showAddModal('Add', null)">Add new</a>
+                    <a href="javascript:void(0)" class="btn btn-secondary btn-round" (click)="showAddModal('Add', null)">Add new</a>
                 </div>
             </div>
         </div>
@@ -43,7 +42,7 @@
                                         <tbody>
                                             <tr *ngFor="let data of basicTable.data">
                                                 <td style="font-weight: bold;">{{ data.user_name }}</td>
-                                                <td><img style="width: 50px; height: 50px;" src="{{data.image ?? 'https://banner2.cleanpng.com/20180628/yta/kisspng-computer-icons-user-user-interface-toolkit-5b34c2ad9d3997.826176721530184365644.jpg'}}"
+                                                <td><img style="width: 50px; height: 50px;" src="{{data.image}}"
                                                         alt="user"></td>
                                                 <td>{{ data.full_name }}</td>
                                                 <td>{{ data.email }}</td>
@@ -60,18 +59,15 @@
                                                         class="fa fa-check"></i></td>
                                                 <td *ngIf="!data.active" style="font-weight: bold; color:red"><i
                                                         class="fa fa-ban"></i></td>
-                                                <td *ngIf="data.isVIP == 0 || !data.isVIP"
-                                                    style="font-weight: bold; color:red">X</td>
+                                                <td *ngIf="data.isVIP == 0 || !data.isVIP" style="font-weight: bold; color:red">X</td>
                                                 <td *ngIf="data.isVIP == 1"
                                                     style="font-weight: bold; color:rgb(211, 211, 40)">Waiting Accept
                                                 </td>
                                                 <td *ngIf="data.isVIP == 3" style="font-weight: bold; color:green"><i
                                                         class="fa fa-check"></i></td>
                                                 <td>{{ data.role_code ?? ''}}</td>
-                                                <td *ngIf="data.created_at">{{ data.created_at | date: 'dd/MM/yyyy hh:mm
-                                                    aa'}}</td>
-                                                <td *ngIf="data.updated_at">{{ data.updated_at | date: 'dd/MM/yyyy hh:mm
-                                                    aa'}}</td>
+                                                <td *ngIf="data.created_at">{{ data.created_at | date: 'dd/MM/yyyy hh:mm aa'}}</td>
+                                                <td *ngIf="data.updated_at">{{ data.updated_at | date: 'dd/MM/yyyy hh:mm aa'}}</td>
                                                 <td *ngIf="!data.created_at"></td>
                                                 <td *ngIf="!data.updated_at"></td>
                                                 <td style="white-space: nowrap;">
@@ -93,10 +89,10 @@
                                                         style="margin-right: 0.5rem;" (click)="banAccount(data._id)">
                                                         <i class="fa fa-ban"></i>
                                                     </button>
-                                                    <button class="btn btn-sm btn-outline-primary" placement="left"
-                                                        style="margin-right: 0.1rem;" (click)="showConfirmUpdateVIP(data._id)">
+                                                    <!-- <button class="btn btn-sm btn-outline-primary" placement="left"
+                                                        style="margin-right: 0.1rem;" (click)="updateVIP(data._id)">
                                                         <i class="fa fa-user-plus" aria-hidden="true"></i>
-                                                    </button>
+                                                    </button> -->
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -116,30 +112,26 @@
     <ng-container *nzModalContent>
         <form class="form-horizontal" [formGroup]="AddForm">
             <div class="row">
-                <nz-form-item class="col-md-12" *ngIf="isInsert">
-                    <nz-form-label nzRequired>UserName</nz-form-label>
-                    <nz-form-control nzErrorTip="You must input !">
-                        <input formControlName="user_name" nz-input placeholder="input.." />
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item class="col-md-12">
-                    <nz-form-label nzRequired>Full name</nz-form-label>
-                    <nz-form-control nzErrorTip="You must input !">
-                        <input formControlName="full_name" nz-input placeholder="input.." />
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item class="col-md-12">
-                    <nz-form-label nzRequired>Email</nz-form-label>
-                    <nz-form-control nzErrorTip="You must input !">
-                        <input formControlName="email" nz-input placeholder="input.." />
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item class="col-md-12">
-                    <nz-form-label>Address</nz-form-label>
-                    <nz-form-control>
-                        <input formControlName="address" nz-input placeholder="input.." />
-                    </nz-form-control>
-                </nz-form-item>
+                <div class="col-md-12" *ngIf="isInsert">
+                    <label class="col-md-10 require">UserName</label>
+                    <input type="text" class="form-control" formControlName="user_name" placeholder="input...">
+                </div>
+                <div class="col-md-12">
+                    <label class="col-md-10 require">Full name</label>
+                    <input type="text" class="form-control" formControlName="full_name" placeholder="input...">
+                </div>
+                <div class="col-md-12">
+                    <label class="col-md-10">Email</label>
+                    <input type="text" class="form-control" formControlName="email" placeholder="input..">
+                </div>
+                <!-- <div class="col-md-12">
+                    <label class="col-md-10">Date of birth</label>
+                    <input type="date" class="form-control" formControlName="dob" placeholder="input..">
+                </div> -->
+                <div class="col-md-12">
+                    <label class="col-md-10">Address</label>
+                    <input type="text" class="form-control" formControlName="address" placeholder="input..">
+                </div>
                 <br />
                 <div class="col-md-6">
                     <label nz-checkbox [(ngModel)]="checkAdmin" [ngModelOptions]="{standalone: true}">Admin</label>
@@ -150,20 +142,12 @@
                 <br />
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <label class="col-md-12">Role</label>
-                            <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select a role"
+                            <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select role"
                                 [ngModelOptions]="{standalone: true}" [(ngModel)]="roleSelect">
-                                <nz-option *ngFor="let r of listRole" nzValue="{{r.role_code}}"
-                                    nzLabel="{{r.role_name}}"></nz-option>
-                            </nz-select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="col-md-12">Company</label>
-                            <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select company"
-                                [ngModelOptions]="{standalone: true}" [(ngModel)]="companySelect">
-                                <nz-option *ngFor="let r of listCompany" nzValue="{{r.company_code}}"
-                                    nzLabel="{{r.company_code}} - {{r.company_name}}"></nz-option>
+                                <nz-option nzValue="STAFF" nzLabel="STAFF"></nz-option>
+                                <nz-option nzValue="MANAGER_COMPANY" nzLabel="MANAGER_COMPANY"></nz-option>
                             </nz-select>
                         </div>
                     </div>

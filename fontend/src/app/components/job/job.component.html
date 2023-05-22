@@ -7,7 +7,6 @@
           <h5 class="text-white op-7 mb-2">Home/Admin/Job</h5>
         </div>
         <div class="ml-md-auto py-2 py-md-0">
-          <a href="#" class="btn btn-white btn-border btn-round mr-2">Manage</a>
           <a href="javascript:void(0)" class="btn btn-secondary btn-round" (click)="showAddModal('Add', '')">Add
             new</a>
         </div>
@@ -95,62 +94,90 @@
   <ng-container *nzModalContent>
     <form class="form-horizontal" [formGroup]="AddForm">
       <div class="row">
-        <div class="col-md-12">
-          <label class="col-md-10 require">Code</label>
-          <input type="text" class="form-control" formControlName="job_code" placeholder="input...">
-        </div>
-        <div class="col-md-12">
-          <label class="col-md-10">Name</label>
-          <input type="text" class="form-control" formControlName="job_name" placeholder="input..">
-        </div>
-        <div class="col-md-12">
-          <label class="col-md-10">Description</label>
-          <input type="text" class="form-control" formControlName="description" placeholder="input..">
-        </div>
-        <div class="col-md-12">
-          <label class="col-md-10">Slot</label>
-          <input type="number" class="form-control" formControlName="slot" placeholder="input..">
-        </div>
-        <div class="col-md-6">
-          <label class="col-md-10">Start date</label>
-          <input type="date" class="form-control" formControlName="start_date" placeholder="input..">
-        </div>
-        <div class="col-md-6">
-          <label class="col-md-10">End date</label>
-          <input type="date" class="form-control" formControlName="end_date" placeholder="input..">
-        </div>
-        <div class="col-md-12">
-          <label class="col-md-10">Image</label>
-          <input type="text" class="form-control" formControlName="image" placeholder="input..">
-        </div>
-        <div class="col-md-6">
-          <label class="col-md-10">Salary min</label>
-          <input type="number" class="form-control" formControlName="salary_min" placeholder="input..">
-        </div>
-        <div class="col-md-6">
-          <label class="col-md-10">Salary max</label>
-          <input type="number" class="form-control" formControlName="salary_max" placeholder="input..">
-        </div>
-        <div class="col-md-6">
-          <label class="col-md-10">Candidate</label>
-          <input type="text" class="form-control" formControlName="candidate" placeholder="input..">
-        </div>
-        <div class="col-md-6">
-          <label class="col-md-10">Technology</label>
-          <input type="text" class="form-control" formControlName="technology" placeholder="input..">
-        </div>
-        <div class="col-md-12">
-          <label class="col-md-10">Experience</label>
-          <input type="text" class="form-control" formControlName="experience" placeholder="input..">
-        </div>
-        <div class="col-md-6">
-          <label class="col-md-10">Benefits</label>
-          <input type="text" class="form-control" formControlName="benefits" placeholder="input..">
-        </div>
-        <div class="col-md-6">
-          <label class="col-md-10">Requirement</label>
-          <input type="text" class="form-control" formControlName="requirement" placeholder="input..">
-        </div>
+        <nz-form-item class="col-md-12">
+          <nz-form-label nzRequired>Code</nz-form-label>
+          <nz-form-control nzErrorTip="You must input !">
+            <input formControlName="job_code" nz-input placeholder="input.." />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="col-md-12">
+          <nz-form-label nzRequired>Name</nz-form-label>
+          <nz-form-control nzErrorTip="You must input !">
+            <input formControlName="job_name" nz-input placeholder="input.." />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="col-md-12">
+          <nz-form-label nzRequired>Description</nz-form-label>
+          <nz-form-control nzErrorTip="You must input !">
+            <input formControlName="description" nz-input placeholder="input.." />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="col-md-12">
+          <nz-form-label nzRequired>Slot</nz-form-label>
+          <nz-form-control nzErrorTip="You must input !">
+            <input formControlName="slot" nz-input placeholder="input.." />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="col-md-12">
+          <nz-form-label nzRequired>Start date</nz-form-label>
+          <nz-form-control nzErrorTip="You must input !">
+            <nz-date-picker formControlName="start_date"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="col-md-12">
+          <nz-form-label nzRequired>End date</nz-form-label>
+          <nz-form-control nzErrorTip="You must input !">
+            <nz-date-picker formControlName="end_date"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="col-md-12">
+          <nz-form-label nzRequired>Image</nz-form-label>
+          <nz-form-control nzErrorTip="You must input !">
+            <input formControlName="image" nz-input placeholder="input.." />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="col-md-6">
+          <nz-form-label nzRequired>Salary min</nz-form-label>
+          <nz-form-control nzErrorTip="You must input !">
+            <input formControlName="salary_min" nz-input placeholder="input.." />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="col-md-6">
+          <nz-form-label nzRequired>Salary max</nz-form-label>
+          <nz-form-control nzErrorTip="You must input !">
+            <input formControlName="salary_max" nz-input placeholder="input.." />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="col-md-6">
+          <nz-form-label nzRequired>Candidate</nz-form-label>
+          <nz-form-control nzErrorTip="You must input !">
+            <input formControlName="candidate" nz-input placeholder="input.." />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="col-md-6">
+          <nz-form-label nzRequired>Technology</nz-form-label>
+          <nz-form-control nzErrorTip="You must input !">
+            <input formControlName="technology" nz-input placeholder="input.." />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="col-md-6">
+          <nz-form-label nzRequired>Experience</nz-form-label>
+          <nz-form-control nzErrorTip="You must input !">
+            <input formControlName="experience" nz-input placeholder="input.." />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="col-md-6">
+          <nz-form-label nzRequired>Benefits</nz-form-label>
+          <nz-form-control nzErrorTip="You must input !">
+            <input formControlName="benefits" nz-input placeholder="input.." />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="col-md-6">
+          <nz-form-label nzRequired>Requirement</nz-form-label>
+          <nz-form-control nzErrorTip="You must input !">
+            <input formControlName="requirement" nz-input placeholder="input.." />
+          </nz-form-control>
+        </nz-form-item>
         <div class="col-md-6">
           <label class="col-md-10">Gender</label>
           <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Select gender"
@@ -160,14 +187,18 @@
             <nz-option [nzValue]="2" nzLabel="Other"></nz-option>
           </nz-select>
         </div>
-        <div class="col-md-6">
-          <label class="col-md-10">Work form</label>
-          <input type="text" class="form-control" formControlName="work_form" placeholder="input..">
-        </div>
-        <div class="col-md-12">
-          <label class="col-md-10">Work place</label>
-          <input type="text" class="form-control" formControlName="work_place" placeholder="input..">
-        </div>
+        <nz-form-item class="col-md-6">
+          <nz-form-label nzRequired>Work form</nz-form-label>
+          <nz-form-control nzErrorTip="You must input !">
+            <input formControlName="work_form" nz-input placeholder="input.." />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="col-md-6">
+          <nz-form-label nzRequired>Work place</nz-form-label>
+          <nz-form-control nzErrorTip="You must input !">
+            <input formControlName="work_place" nz-input placeholder="input.." />
+          </nz-form-control>
+        </nz-form-item>
       </div>
     </form>
   </ng-container>

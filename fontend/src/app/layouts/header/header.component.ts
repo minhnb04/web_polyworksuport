@@ -29,11 +29,11 @@ export class HeaderComponent implements OnInit {
   }
 
   handleOk(): void {
-    this.accountService.updateInfor({isVIP: true}, this.accountInfor._id).subscribe(
+    this.accountService.updateInfor({isVIP: 1}, this.accountInfor._id).subscribe(
       (res: any) => {
         if (res.StatusCode == 200) {
           this.toastr.success('Success !');
-          this.isVIPaccount = true;
+          this.isVIPaccount = 1;
         }
         else {
           this.toastr.success('Fail !');

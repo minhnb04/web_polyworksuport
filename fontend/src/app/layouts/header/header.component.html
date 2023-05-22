@@ -43,7 +43,7 @@
             <i class="fa fa-search"></i>
           </a>
         </li>
-        <h3 *ngIf="isVIPaccount" style="color: white;margin-right: 10px;">
+        <h3 *ngIf="isVIPaccount == 3" style="color: white;margin-right: 10px;">
           VIP
         </h3>
         <li class="nav-item dropdown hidden-caret">
@@ -82,7 +82,7 @@
 </div>
 
 
-<nz-modal [(nzVisible)]="isDisplayVIP" nzTitle="Upgrade for VIP" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+<nz-modal [(nzVisible)]="isDisplayVIP" nzTitle="Upgrade for VIP with content(TAX Code + Company Name )" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
   <ng-container *nzModalContent>
     <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Qrcode_wikipedia_fr_v2clean.png" width="100"
       height="100" alt="" style="margin: 0 auto;

@@ -1,34 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BaseComponent } from '../base/base.component';
+import { FormControl, FormGroup } from '@angular/forms';
+import { BaseComponent } from 'src/app/components/base/base.component';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  selector: 'app-user-manager',
+  templateUrl: './user-manager.component.html',
+  styleUrls: ['./user-manager.component.scss']
 })
-export class UserComponent extends BaseComponent implements OnInit {
+export class UserManagerComponent extends BaseComponent implements OnInit {
 
   checkAdmin: any = false;
   checkActive: any;
   roleSelect: any;
-  genderSelect: any;
-  companySelect: any;
 
   AddForm = new FormGroup({
-    full_name: new FormControl(null, Validators.required),
-    user_name: new FormControl(null, Validators.required),
-    email: new FormControl(null, Validators.required),
-    // dob: new FormControl(null),
+    full_name: new FormControl(null),
+    user_name: new FormControl(null),
+    email: new FormControl(null),
     address: new FormControl(null),
-    company_code: new FormControl(null),
   })
 
   ngOnInit(): void {
-    this.getListAccount();
+    this.getListAccountByCompany();
     this.getListRole();
-    this.checkIsAdmin();
-    this.getListCompany()
+    this.checkIsManager();
   }
 
   showConfirm(id: any): void {
@@ -40,24 +35,14 @@ export class UserComponent extends BaseComponent implements OnInit {
           (res: any) => {
             if (res) {
               this.toastr.success('Delete Success !');
-              this.getListAccount();
+              this.getListAccountByCompany();
             }
             else {
               this.toastr.warning('Delete Fail !');
-              this.getListAccount();
+              this.getListAccountByCompany();
             }
           }
         )
-      }
-    });
-  }
-
-  showConfirmUpdateVIP(id: any): void {
-    this.modal.confirm({
-      nzTitle: '<i>Do you Want to update this user to VIP?</i>',
-      // nzContent: '<b>Some descriptions</b>',
-      nzOnOk: () => {
-        this.updateVIP(id);
       }
     });
   }
@@ -69,15 +54,12 @@ export class UserComponent extends BaseComponent implements OnInit {
     if (dataEdit != null) {
       this.isInsert = false;
       this.roleSelect = dataEdit.role_code ?? '';
-      this.companySelect = dataEdit.company_code;
-      // this.genderSelect = dataEdit.gender;
       this.checkActive = dataEdit.active;
       this.checkAdmin = dataEdit.admin;
       this.selected_ID = dataEdit._id;
       this.AddForm.patchValue({
         full_name: !dataEdit ? '' : dataEdit.full_name,
         email: !dataEdit ? '' : dataEdit.email,
-        // dob: !dataEdit ? '' : dataEdit.dob.substring(0,10),
         address: !dataEdit ? '' : dataEdit.address,
       });
     }
@@ -87,7 +69,7 @@ export class UserComponent extends BaseComponent implements OnInit {
     }
   }
 
-  handleOk(): boolean {
+  handleOk(): void {
     var req: any = {
       full_name: this.AddForm.value.full_name,
       email: this.AddForm.value.email,
@@ -97,64 +79,44 @@ export class UserComponent extends BaseComponent implements OnInit {
       admin: this.checkAdmin,
       active: this.checkActive,
       role_code: this.roleSelect ?? '',
-      company_code: this.companySelect,
+      company_code: this.getInfo().company_code,
       created_at: null,
       updated_at: null,
       deleted_at: null,
     }
-    if (!req.role_code || !req.company_code) {
-      this.toastr.warning('You must select role and company');
-      return false;
-    }
-    if (this.AddForm.valid) {
-      if (this.selected_ID) {
-        req.updated_at = new Date();
-        this.accountService.updateInfor(req, this.selected_ID).subscribe(
-          (res: any) => {
-            if (res) {
-              this.toastr.success('Success !');
-              this.getListAccount();
-            }
-            else {
-              this.toastr.success('Fail !');
-            }
+
+    if (this.selected_ID) {
+      req.updated_at = new Date();
+      this.accountService.updateInfor(req, this.selected_ID).subscribe(
+        (res: any) => {
+          if (res) {
+            this.toastr.success('Success !');
+            this.getListAccountByCompany();
           }
-        );
-      }
-      else {
-        req.created_at = new Date();
-        req.user_name = this.AddForm.value.user_name;
-        req.password = '123';
-        if (this.listAccount.filter((x: any) => x.user_name == req.user_name).length > 0) {
-          this.toastr.warning('The user name was existed');
-          return false;
+          else {
+            this.toastr.success('Fail !');
+          }
         }
-        this.accountService.insert(req).subscribe(
-          (res: any) => {
-            if (res) {
-              this.toastr.success('Success !');
-              this.getListAccount();
-            }
-            else {
-              this.toastr.success('Fail !');
-            }
-          }
-        );
-      }
-      this.isDisplay = false;
-      return true;
+      );
     }
     else {
-      {
-        Object.values(this.AddForm.controls).forEach(control => {
-          if (control.invalid) {
-            control.markAsDirty();
-            control.updateValueAndValidity({ onlySelf: true });
+      req.created_at = new Date();
+      req.user_name = this.AddForm.value.user_name,
+        req.password = '123';
+      this.accountService.insert(req).subscribe(
+        (res: any) => {
+          if (res) {
+            this.toastr.success('Success !');
+            this.getListAccountByCompany();
           }
-        });
-        return false;
-      }
+          else {
+            this.toastr.success('Fail !');
+          }
+        }
+      );
     }
+
+    this.isDisplay = false;
   }
 
   handleCancel(): void {
@@ -167,7 +129,7 @@ export class UserComponent extends BaseComponent implements OnInit {
       (res: any) => {
         if (res) {
           this.toastr.success('Success !');
-          this.getListAccount();
+          this.getListAccountByCompany();
         }
         else {
           this.toastr.success('Fail !');
@@ -181,7 +143,7 @@ export class UserComponent extends BaseComponent implements OnInit {
       (res: any) => {
         if (res) {
           this.toastr.success('Success !');
-          this.getListAccount();
+          this.getListAccountByCompany();
         }
         else {
           this.toastr.success('Fail !');
@@ -195,7 +157,7 @@ export class UserComponent extends BaseComponent implements OnInit {
       (res: any) => {
         if (res.StatusCode == 200) {
           this.toastr.success('Success !');
-          this.getListAccount();
+          this.getListAccountByCompany();
         }
         else {
           this.toastr.success('Fail !');

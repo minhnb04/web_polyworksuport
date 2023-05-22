@@ -13,7 +13,9 @@ import { AccountService } from 'src/app/services/account.service';
 import { JobService } from 'src/app/services/job.service';
 import { DocumentCVService } from 'src/app/services/document-cv.service';
 import { UserJobService } from 'src/app/services/userJob.service';
+import { CompanyService } from 'src/app/services/company.service';
 // import { ExcelServices } from 'src/app/services/excel.service';
+import * as _ from 'lodash';    
 
 const formatDate = (date: string | number | Date) => {
   var d = new Date(date),
@@ -59,6 +61,8 @@ export class BaseComponent {
   isDisplayDetail: boolean = false;
   isDisplayColor: boolean = false;
   listUserJob: any;
+  isAdmin: any = false;
+  isInsert: any = false;
 
   constructor(
     public titleService: Title,
@@ -74,6 +78,7 @@ export class BaseComponent {
     public jobService: JobService,
     public documentCVService: DocumentCVService,
     public userJobService: UserJobService,
+    public companyService: CompanyService
     // public excelService: ExcelServices
   ) { }
 
@@ -82,10 +87,28 @@ export class BaseComponent {
   listJob: any = [];
   listDocumentCV: any = [];
   company_code: any;
+  listCompany: any = [];
+  isManager: any;
 
   getInfo() {
     var infoUser = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('UserInfo'))));
     return infoUser;
+  }
+
+  checkIsAdmin() {
+    var infor = this.getInfo();
+    if (infor.role_code == '001') {
+      return this.isAdmin = true;
+    }
+    return this.isAdmin = false;
+  }
+
+  checkIsManager() {
+    var infor = this.getInfo();
+    if (infor.role_code == 'MANAGER_COMPANY') {
+      return this.isManager = true;
+    }
+    return this.isManager = false;
   }
 
   genRandonString(length: any) {
@@ -109,7 +132,17 @@ export class BaseComponent {
   getListAccount = () => {
     this.accountService.getList().subscribe(
       (res: any) => {
-        this.listAccount = res.Data;
+        this.listAccount = res.Data.sort((a: any, b: any) => b.created_at - a.created_at);
+        this.listAccount = this.listAccount.reverse();
+      }
+    )
+  };
+
+  getListAccountByCompany = () => {
+    this.accountService.getList().subscribe(
+      (res: any) => {
+        this.listAccount = res.Data.filter((x: any) => x.company_code == this.getInfo().company_code);
+        this.listAccount = this.listAccount.sort((a: any, b: any) => a.created_at - b.created_at);
       }
     )
   };
@@ -117,7 +150,8 @@ export class BaseComponent {
   getListDocumentCV = () => {
     this.documentCVService.getList().subscribe(
       (res: any) => {
-        this.listDocumentCV = res.Data;
+        this.listDocumentCV = res.Data.sort((a: any, b: any) => b.created_at - a.created_at);
+        this.listDocumentCV = this.listDocumentCV.reverse();
       }
     )
   };
@@ -125,7 +159,8 @@ export class BaseComponent {
   getListJob = () => {
     this.jobService.getList().subscribe(
       (res: any) => {
-        this.listJob = res.Data;
+        this.listJob = res.Data.sort((a: any, b: any) => b.created_at - a.created_at);
+        this.listJob = this.listJob.reverse();
       }
     )
   };
@@ -134,7 +169,8 @@ export class BaseComponent {
     if (company_code?.length > 0) {
       this.jobService.getListByCompany(company_code).subscribe(
         (res: any) => {
-          this.listJob = res.Data;
+          this.listJob = res.Data.sort((a: any, b: any) => a.created_at - b.created_at);
+          this.listJob = this.listJob.reverse();
         }
       )
     }
@@ -144,24 +180,53 @@ export class BaseComponent {
   };
 
   getListUserJobByCompany = (company_code: any) => {
+    this.spinner.show();
     if (company_code?.length > 0) {
       this.userJobService.getListByCompany(company_code).subscribe(
         (res: any) => {
-          this.listUserJob = res.Data;
+          this.listUserJob = res.Data.sort((a: any, b: any) => b.created_at - a.created_at);
+          this.listUserJob = this.listUserJob.reverse();
+          this.spinner.hide();
         }
       )
     }
     else {
       this.getListUserJob();
+      this.spinner.hide();
+
+    }
+  };
+
+  getListCVByCompany = (company_code: any) => {
+    if (company_code?.length > 0) {
+      this.documentCVService.getListByCompany(company_code).subscribe(
+        (res: any) => {
+          this.listDocumentCV = res.Data.sort((a: any, b: any) => b.created_at - a.created_at);
+          this.listDocumentCV = this.listDocumentCV.reverse();
+        }
+      )
+    }
+    else {
+      this.getListDocumentCV();
     }
   };
 
   getListUserJob = () => {
     this.userJobService.getList().subscribe(
       (res: any) => {
-        this.listUserJob = res.Data;
+        this.listUserJob = res.Data.sort((a: any, b: any) => b.created_at - a.created_at);
+        this.listUserJob = this.listUserJob.reverse();
       }
     )
+  }
+
+  getListCompany = () => {
+    this.companyService.getList().subscribe(
+      (res: any) => {
+        this.listCompany = res.Data.sort((a: any, b: any) => b.created_at - a.created_at);
+        this.listCompany = this.listCompany.reverse();
+      }
+    );
   }
 
   remove_sign = (str: string) => {

@@ -15,6 +15,7 @@ export class SidebarStaffComponent implements OnInit {
   oldPassword: any;
   newPassword: any;
   confirmPassword: any;
+  isManager: any = false;
 
   constructor(
     private toastr: ToastrService,
@@ -23,6 +24,7 @@ export class SidebarStaffComponent implements OnInit {
 
   ngOnInit(): void {
     this.accountInfor = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('UserInfo'))));
+    this.isManager = this.accountInfor.role_code == 'MANAGER_COMPANY' ? true : false;
     this.emailUpdate = '';
   }
 
